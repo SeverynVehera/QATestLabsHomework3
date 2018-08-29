@@ -16,12 +16,15 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class BaseScript {
 
+    private static WebDriver driver = null;
+
+
     /**
      *
      * @return New instance of {@link WebDriver} object. Driver type is based on passed parameters
      * to the automation project, returns {@link ChromeDriver} instance by default.
      */
-    public static WebDriver getDriver() {
+    protected static WebDriver getDriver() {
         String browser = Properties.getBrowser();
         switch (browser) {
 
@@ -57,12 +60,17 @@ public abstract class BaseScript {
      * @return New instance of {@link EventFiringWebDriver} object. Driver type is based on passed parameters
      * to the automation project, returns {@link ChromeDriver} instance by default.
      */
-    public static EventFiringWebDriver getConfiguredDriver() {
-        WebDriver driver = getDriver();
+    protected static EventFiringWebDriver getConfiguredDriver() {
+        driver = getDriver();
         driver.manage().window().maximize();
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         return new EventFiringWebDriver(driver);
-       // TODO configure browser window (set timeouts, browser pindow position) and connect loggers.
+    }
+
+    protected static void webDriverTearDown(){
+        if (driver != null){
+            driver.quit();
+        }
     }
 }

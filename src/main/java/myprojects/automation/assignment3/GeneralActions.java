@@ -29,7 +29,6 @@ public class GeneralActions {
      * @param password
      */
     public void login(String login, String password) {
-        // TODO implement logging in to Admin Panel
         driver.get(Properties.getBaseAdminUrl());
 
         initLoginPageWebElements();
@@ -48,7 +47,6 @@ public class GeneralActions {
      * @param categoryName
      */
     public void createCategory(String categoryName) {
-        // TODO implement logic for new category creation
 
         clickCatalogSubItemCategories();
 
@@ -62,21 +60,29 @@ public class GeneralActions {
 
         getNewCategorySubmitButton().click();
 
-        waitForContentLoad();
-        if (getSuccessAlertMessage().isDisplayed())
-            System.out.println("Success Alert Message  is Displayed");
+        wait.until(ExpectedConditions.visibilityOf(getSuccessAlertMessage()));
+
     }
 
     public void checkNewCategory(String categoryName) {
+        boolean success = false;
+
         getSortByNameAsc().click();
 
         wait.until(ExpectedConditions.visibilityOfAllElements(getCategoriesNames()));
         for(WebElement current : getCategoriesNames()){
-            if (current.equals(categoryName)) {
-                System.out.println("Test Success");
+            if (current.getText().contains(categoryName)) {
+                success = true;
+                break;
             } else {
-                System.out.println("Test Failed");
+                success = false;
             }
+        }
+
+        if (success){
+            System.out.println("New category presence in the list");
+        } else {
+            System.out.println("New category absence in the list");
         }
 
     }
@@ -84,8 +90,7 @@ public class GeneralActions {
     /**
      * Waits until page loader disappears from the page
      */
-    public void waitForContentLoad() {
-        // TODO implement generic method to wait until page content is loaded
+    private void waitForContentLoad() {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div")));
         // ...
     }

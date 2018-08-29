@@ -1,6 +1,5 @@
 package myprojects.automation.assignment3.utils;
 
-import myprojects.automation.assignment3.BaseScript;
 import org.openqa.selenium.remote.BrowserType;
 
 /**
@@ -10,8 +9,8 @@ public class Properties {
     private static final String DEFAULT_BASE_URL = "http://prestashop-automation.qatestlab.com.ua/";
     private static final String DEFAULT_BASE_ADMIN_URL = "http://prestashop-automation.qatestlab.com.ua/admin147ajyvk0/";
     private static final String DEFAULT_BROWSER = BrowserType.CHROME;
-    private static final String DEFAULT_LOGIN = System.getenv("PRESTA_LOGIN");
-    private static final String DEFAULT_PASSWORD = System.getenv("PRESTA_PASSWD");
+    private static final String DEFAULT_LOGIN = "webinar.test@gmail.com";
+    private static final String DEFAULT_PD = "Xcg7299bnSmMuRLp9ITw";
     /**
      *
      * @return Website frontend.
@@ -36,16 +35,13 @@ public class Properties {
         return System.getProperty(EnvironmentVariables.BROWSER.toString(), DEFAULT_BROWSER);
     }
 
-    public static void setBrowser(String browser) {
-        System.setProperty("browser", browser);
-    }
 
     public static String getLogin() {
         return System.getProperty(EnvironmentVariables.LOGIN.toString(), DEFAULT_LOGIN);
     }
 
     public static String getPassword() {
-        return System.getProperty(EnvironmentVariables.PASSWORD.toString(), DEFAULT_PASSWORD);
+        return System.getProperty(EnvironmentVariables.PASSWORD.toString(), DEFAULT_PD);
     }
 
 }
